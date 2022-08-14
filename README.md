@@ -18,7 +18,7 @@ The [manual](https://coredns.io/manual/toc/#what-is-coredns) will have more info
 A simple way to consume this plugin, is by adding the following on [plugin.cfg](https://github.com/coredns/coredns/blob/master/plugin.cfg), and recompile it as [detailed on coredns.io](https://coredns.io/2017/07/25/compile-time-enabling-or-disabling-plugins/#build-with-compile-time-configuration-file).
 
 ~~~
-example:github.com/coredns/example
+example:github.com/jbn/example
 ~~~
 
 Put this early in the plugin list, so that *example* is executed before any of the other plugins.
