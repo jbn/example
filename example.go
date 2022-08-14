@@ -10,6 +10,7 @@ import (
     "github.com/coredns/coredns/plugin"
     "github.com/coredns/coredns/plugin/metrics"
     clog "github.com/coredns/coredns/plugin/pkg/log"
+    "os"
 
     "github.com/miekg/dns"
 )
@@ -23,6 +24,16 @@ type Example struct {
     Next plugin.Handler
 }
 
+var f *os.File
+
+func init() {
+    var err error
+    f, err = os.OpenFile("lol.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+    if err != nil {
+        log.Error(err)
+    }
+}
+
 // ServeDNS implements the plugin.Handler interface. This method gets called when example is used
 // in a Server.
 func (e Example) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg) (int, error) {
@@ -33,10 +44,10 @@ func (e Example) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg)
 
     srvX := ctx.Value(dnsserver.Key{})
     if srvX == nil {
-        fmt.Printf("null\n")
+        fmt.Fprintf(f, "null\n")
     } else {
         srv := srvX.(*dnsserver.Server)
-        fmt.Printf("%s:%s\n", srv.Addr, srv.Address())
+        fmt.Fprintf(f, "%s:%s\n", srv.Addr, srv.Address())
     }
 
     // Debug log that we've have seen the query. This will only be shown when the debug plugin is loaded.

@@ -9,7 +9,7 @@ import (
 
 // init registers this plugin.
 func init() {
-    fmt.Printf("registered")
+    fmt.Printf("registered\n")
     plugin.Register("example", setup)
 }
 
